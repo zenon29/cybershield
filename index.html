@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="CyberShield AI is an educational, browser-based cybersecurity threat detection demonstration.">
+  <title>CyberShield AI | Threat Detection Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#dashboard" data-view="dashboard" aria-label="CyberShield AI dashboard">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-copy"><strong>CYBER<span>SHIELD</span></strong><small>INTELLIGENCE PLATFORM</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list">
+        <button class="nav-link active" data-view="dashboard"><span class="nav-icon">◫</span>Dashboard</button>
+        <button class="nav-link" data-view="url-scanner"><span class="nav-icon">⌕</span>URL Scanner</button>
+        <button class="nav-link" data-view="message-analyzer"><span class="nav-icon">▤</span>Message Analyzer</button>
+        <button class="nav-link" data-view="threat-monitor"><span class="nav-icon">⌁</span>Threat Monitor</button>
+        <button class="nav-link" data-view="awareness"><span class="nav-icon">◎</span>Security Awareness</button>
+        <button class="nav-link" data-view="history"><span class="nav-icon">◷</span>Scan History</button>
+        <button class="nav-link" data-view="about"><span class="nav-icon">◇</span>About AI</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="demo-note"><span class="pulse-dot"></span><div><strong>EDUCATIONAL DEMO</strong><small>Offline heuristic analysis</small></div></div>
+        <button class="profile-button" data-view="about"><span class="avatar">CS</span><span><strong>CyberShield AI</strong><small>Local workspace</small></span><span class="more-dots">···</span></button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumb"><span>SECURITY OPERATIONS</span><b>/</b><strong id="currentPageLabel">Dashboard</strong></div>
+        <div class="topbar-actions">
+          <span class="local-badge"><span class="tiny-dot"></span> LOCAL &amp; PRIVATE</span>
+          <button class="icon-button" id="resetDashboard" title="Reset dashboard data" aria-label="Reset dashboard data">↻</button>
+          <div class="global-status"><span class="status-orb"></span><span><small>GLOBAL STATUS</small><strong id="globalStatusText">ALL SYSTEMS NOMINAL</strong></span></div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="view active" id="view-dashboard" aria-labelledby="dashboardTitle">
+          <div class="page-heading dashboard-heading">
+            <div><p class="eyebrow"><span class="live-dot"></span> SECURITY OVERVIEW <span class="eyebrow-divider">/</span> <span id="todayLabel">TODAY</span></p>
+              <h1 id="dashboardTitle">Good to see you, <span>Analyst.</span></h1>
+              <p class="subheading">Your security workspace at a glance. Explore the tools and learn what the signals mean.</p></div>
+            <button class="button button-primary" data-go="url-scanner"><span>＋</span> New analysis</button>
+          </div>
+          <div class="notice-banner"><span class="notice-icon">i</span><p><strong>Learning environment:</strong> scans use local JavaScript rules only. No submitted content is sent anywhere, and no real threat-intelligence service is queried.</p><button class="notice-close" aria-label="Dismiss notice">×</button></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total scans</span><span class="stat-icon cyan">⌕</span></div><strong class="stat-value" id="totalScans">0</strong><div class="stat-foot"><span class="trend-neutral">↗</span> All-time local analyses</div><div class="stat-line cyan-line"></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Threats detected</span><span class="stat-icon red">⌁</span></div><strong class="stat-value" id="threatCount">0</strong><div class="stat-foot"><span class="trend-red">●</span> Medium and high risk findings</div><div class="stat-line red-line"></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Safe items</span><span class="stat-icon green">✓</span></div><strong class="stat-value" id="safeCount">0</strong><div class="stat-foot"><span class="trend-green">●</span> Low risk results</div><div class="stat-line green-line"></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Security status</span><span class="stat-icon purple">◈</span></div><strong class="stat-value status-value" id="securityStatus">READY</strong><div class="stat-foot"><span class="status-mini-dot"></span><span id="securityStatusNote">No local findings yet</span></div><div class="stat-line purple-line"></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel activity-panel">
+              <div class="panel-heading"><div><p class="eyebrow">OVERVIEW</p><h2>Recent scan activity</h2></div><button class="text-button" data-go="history">View history <span>→</span></button></div>
+              <div class="chart-wrap"><div class="chart-y-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div class="chart-area" id="activityChart" aria-label="Risk scores from recent scans"></div></div>
+              <div class="chart-legend"><span><i class="legend-dot cyan-dot"></i> Risk score</span><small>Latest 7 analyses · local history</small></div>
+            </article>
+            <article class="panel quick-panel">
+              <div class="panel-heading"><div><p class="eyebrow">QUICK ACTIONS</p><h2>Start an analysis</h2></div></div>
+              <button class="action-card" data-go="url-scanner"><span class="action-icon cyan">↗</span><span><strong>Scan a URL</strong><small>Check for suspicious link patterns</small></span><b>→</b></button>
+              <button class="action-card" data-go="message-analyzer"><span class="action-icon purple">✉</span><span><strong>Analyze a message</strong><small>Review common phishing indicators</small></span><b>→</b></button>
+              <button class="action-card" data-go="threat-monitor"><span class="action-icon orange">⌁</span><span><strong>Explore simulated events</strong><small>Learn how anomaly signals work</small></span><b>→</b></button>
+              <div class="quick-foot"><span>⌘</span> Everything runs locally in this browser</div>
+            </article>
+          </div>
+          <div class="section-title-row"><div><p class="eyebrow">LATEST ACTIVITY</p><h2>Recent analyses</h2></div><button class="text-button" data-go="history">See all <span>→</span></button></div>
+          <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>TYPE</th><th>ITEM</th><th>RESULT</th><th>RISK</th><th>TIME</th></tr></thead><tbody id="dashboardRecent"><tr><td colspan="5"><div class="empty-state compact"><span>◷</span><strong>No analyses yet</strong><small>Your local scan results will appear here.</small></div></td></tr></tbody></table></div></div>
+        </section>
+
+        <section class="view" id="view-url-scanner" aria-labelledby="urlTitle">
+          <div class="page-heading"><div><p class="eyebrow">THREAT ANALYSIS <span class="eyebrow-divider">/</span> URL INTELLIGENCE</p><h1 id="urlTitle">URL <span>Scanner</span></h1><p class="subheading">Review a link for common suspicious characteristics before interacting with it.</p></div></div>
+          <div class="disclaimer"><span>ⓘ</span><p><strong>Heuristic demonstration only.</strong> This tool does not visit the URL or check it against malware databases. A low-risk result is not proof that a website is safe.</p></div>
+          <div class="scanner-layout">
+            <article class="panel scan-input-panel">
+              <div class="panel-heading"><div><p class="eyebrow">01 / INPUT</p><h2>Enter a website URL</h2></div><span class="step-tag">RULE-BASED</span></div>
+              <form id="urlForm" novalidate>
+                <label for="urlInput">Website address</label>
+                <div class="input-with-icon"><span>↗</span><input id="urlInput" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" maxlength="2048" aria-describedby="urlHelp urlError"></div>
+                <small class="field-help" id="urlHelp">Enter a full URL or a domain name. Nothing is sent to a server.</small><p class="field-error" id="urlError" role="alert"></p>
+                <button class="button button-primary scan-button" type="submit" id="urlSubmit"><span>⌕</span> Analyze URL</button>
+              </form>
+              <div class="example-block"><span>TRY AN EXAMPLE</span><button type="button" class="example-chip" data-url-example="https://www.wikipedia.org/">Ordinary link</button><button type="button" class="example-chip" data-url-example="http://198.51.100.42/secure-login">Suspicious patterns</button></div>
+              <div class="privacy-foot"><span>▣</span> Private by design <i></i> Browser-only analysis</div>
+            </article>
+            <article class="panel result-panel" id="urlResult">
+              <div class="panel-heading"><div><p class="eyebrow">02 / ANALYSIS</p><h2>Scan result</h2></div><span class="result-placeholder-icon">◉</span></div>
+              <div class="empty-result" id="urlEmpty"><div class="radar-illustration"><span></span><i></i><b>⌕</b></div><strong>Ready when you are</strong><p>Enter a URL to see a local heuristic analysis.</p></div>
+              <div class="scan-result hidden" id="urlResultContent"></div>
+            </article>
+          </div>
+          <article class="panel how-panel"><div class="how-icon">✳</div><div><strong>How this demo works</strong><p>Readable JavaScript rules look for URL patterns such as raw IP addresses, HTTP, link shorteners, misleading hostnames, and urgency-related words. This is a learning aid, not an AI model or a security verdict.</p></div></article>
+        </section>
+
+        <section class="view" id="view-message-analyzer" aria-labelledby="messageTitle">
+          <div class="page-heading"><div><p class="eyebrow">THREAT ANALYSIS <span class="eyebrow-divider">/</span> MESSAGE INTELLIGENCE</p><h1 id="messageTitle">Message <span>Analyzer</span></h1><p class="subheading">Look for common social engineering and phishing warning signs in a message.</p></div></div>
+          <div class="disclaimer"><span>ⓘ</span><p><strong>Private, educational analysis.</strong> Message content stays in your browser and is checked using simple phrase-matching rules, not a trained language model.</p></div>
+          <div class="message-layout">
+            <article class="panel message-input-panel"><div class="panel-heading"><div><p class="eyebrow">01 / MESSAGE CONTENT</p><h2>Paste a message to review</h2></div><span class="step-tag">LOCAL ONLY</span></div>
+              <div class="sample-row"><span>LOAD SAMPLE</span><button class="sample-button" data-message-sample="urgent">Urgent account alert</button><button class="sample-button" data-message-sample="safe">Routine message</button><button class="sample-button" data-message-sample="prize">Prize notification</button></div>
+              <form id="messageForm" novalidate><label for="messageInput">Message text</label><textarea id="messageInput" maxlength="10000" placeholder="Paste an email, SMS, or other text message here…" aria-describedby="messageHelp messageError"></textarea><div class="textarea-meta"><small id="messageHelp">Do not include real passwords, OTPs, or other sensitive information.</small><small><span id="charCount">0</span> / 10,000</small></div><p class="field-error" id="messageError" role="alert"></p><button class="button button-primary scan-button" id="messageSubmit" type="submit"><span>✧</span> Analyze message</button></form>
+            </article>
+            <article class="panel message-result-panel"><div class="panel-heading"><div><p class="eyebrow">02 / ANALYSIS</p><h2>Analysis result</h2></div><span class="result-placeholder-icon">▤</span></div>
+              <div class="empty-result" id="messageEmpty"><div class="message-illustration">✉<span>✧</span></div><strong>Nothing analyzed yet</strong><p>Your findings and suggested next steps will appear here.</p></div>
+              <div class="scan-result hidden" id="messageResultContent"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-threat-monitor" aria-labelledby="monitorTitle">
+          <div class="page-heading"><div><p class="eyebrow">SECURITY OPERATIONS <span class="eyebrow-divider">/</span> EVENT SIMULATION</p><h1 id="monitorTitle">Threat <span>Monitor</span></h1><p class="subheading">Explore fictional events and see how simple anomaly rules can surface unusual patterns.</p></div><div class="simulation-state"><span class="live-dot"></span> SIMULATION <span class="sim-badge">NOT REAL MONITORING</span></div></div>
+          <div class="disclaimer"><span>ⓘ</span><p><strong>Fictional data only.</strong> This panel does not connect to your network, device, accounts, or any external system.</p></div>
+          <div class="monitor-stats">
+            <article class="panel monitor-stat"><span class="monitor-stat-icon red">⌁</span><div><small>HIGH SEVERITY</small><strong id="highEvents">0</strong><span>simulated events</span></div></article>
+            <article class="panel monitor-stat"><span class="monitor-stat-icon orange">◉</span><div><small>MEDIUM SEVERITY</small><strong id="mediumEvents">0</strong><span>simulated events</span></div></article>
+            <article class="panel monitor-stat"><span class="monitor-stat-icon green">✓</span><div><small>LOW SEVERITY</small><strong id="lowEvents">0</strong><span>simulated events</span></div></article>
+            <article class="panel anomaly-card"><span class="anomaly-mark">✳</span><div><small>ANOMALY DETECTION</small><strong id="anomalySummary">Patterns being evaluated</strong><p id="anomalyDetail">A demonstration of threshold-based pattern recognition.</p></div></article>
+          </div>
+          <article class="panel event-panel"><div class="panel-heading"><div><p class="eyebrow">SIMULATED ACTIVITY FEED</p><h2>Security events</h2></div><div class="feed-actions"><span class="feed-status"><i></i><span id="feedStatus">PAUSED</span></span><button class="button button-quiet" id="feedToggle">▶ Start feed</button><button class="button button-primary" id="addEvent">＋ Generate event</button></div></div>
+            <div class="table-scroll"><table><thead><tr><th>EVENT</th><th>SOURCE</th><th>SEVERITY</th><th>TIME</th><th>DETECTION NOTE</th></tr></thead><tbody id="eventRows"></tbody></table></div>
+            <div class="event-foot"><span>◉ All sources and events shown are fictional.</span><span id="eventCountLabel"></span></div>
+          </article>
+          <div class="monitor-bottom"><article class="panel mini-chart-panel"><div class="panel-heading"><div><p class="eyebrow">EVENT DISTRIBUTION</p><h2>Severity breakdown</h2></div></div><div class="severity-bars" id="severityBars"></div></article><article class="panel concept-panel"><span class="concept-icon">✳</span><div><p class="eyebrow">LEARNING MOMENT</p><h2>What is an anomaly?</h2><p>An anomaly is a pattern that differs from an expected baseline. In this simulation, repeated failed logins from the same fictional source are flagged by a simple count threshold.</p></div></article></div>
+        </section>
+
+        <section class="view" id="view-awareness" aria-labelledby="awarenessTitle">
+          <div class="page-heading"><div><p class="eyebrow">LEARN &amp; PRACTICE <span class="eyebrow-divider">/</span> AWARENESS CENTRE</p><h1 id="awarenessTitle">Security <span>Awareness</span></h1><p class="subheading">Build practical habits to recognize common threats and protect your accounts.</p></div></div>
+          <div class="learning-grid" id="learningCards"></div>
+          <article class="panel quiz-panel"><div class="panel-heading"><div><p class="eyebrow">KNOWLEDGE CHECK</p><h2>Quick security quiz</h2><p class="panel-subtitle">Choose an answer to get instant feedback and a short explanation.</p></div><span class="quiz-counter" id="quizCounter">QUESTION 1 / 5</span></div>
+            <div id="quizContent"></div>
+          </article>
+        </section>
+
+        <section class="view" id="view-history" aria-labelledby="historyTitle">
+          <div class="page-heading"><div><p class="eyebrow">LOCAL RECORDS <span class="eyebrow-divider">/</span> ANALYSIS LOG</p><h1 id="historyTitle">Scan <span>History</span></h1><p class="subheading">Results are saved only in this browser using localStorage.</p></div><button class="button button-danger" id="clearHistory">⌫ Clear history</button></div>
+          <div class="history-summary"><div class="history-summary-item"><span class="history-summary-icon cyan">⌕</span><span><small>RECORDED ANALYSES</small><strong id="historyTotal">0</strong></span></div><div class="history-summary-item"><span class="history-summary-icon purple">◷</span><span><small>LAST SCAN</small><strong id="historyLast">—</strong></span></div><div class="history-summary-item"><span class="history-summary-icon red">⌁</span><span><small>MEDIUM / HIGH FINDINGS</small><strong id="historyThreats">0</strong></span></div></div>
+          <div class="panel table-panel history-table-panel"><div class="panel-heading"><div><p class="eyebrow">ALL LOCAL RESULTS</p><h2>Analysis log</h2></div><span class="local-only-label"><i></i> Stored on this device</span></div><div class="table-scroll"><table><thead><tr><th>TYPE</th><th>ITEM</th><th>CLASSIFICATION</th><th>SCORE</th><th>DATE &amp; TIME</th></tr></thead><tbody id="historyRows"></tbody></table></div></div>
+          <p class="history-note"><span>ⓘ</span> Clearing browser storage or using a different browser/profile will remove or hide these records. History is not synced.</p>
+        </section>
+
+        <section class="view" id="view-about" aria-labelledby="aboutTitle">
+          <div class="page-heading"><div><p class="eyebrow">PLATFORM GUIDE <span class="eyebrow-divider">/</span> TRANSPARENT BY DESIGN</p><h1 id="aboutTitle">About <span>AI</span></h1><p class="subheading">A clear look at the concepts this educational application demonstrates—and what it does not do.</p></div></div>
+          <div class="about-hero panel"><div class="about-emblem">✳</div><div><span class="step-tag">EDUCATIONAL PROTOTYPE</span><h2>Rules that teach. No model pretending.</h2><p>CyberShield AI is a browser-only demonstration of selected cybersecurity analysis concepts. Its results come from explicit JavaScript rules, not a trained machine-learning model, live threat feeds, or external services.</p></div></div>
+          <div class="concept-grid">
+            <article class="panel concept-tile"><span class="concept-tile-icon cyan">▤</span><p class="eyebrow">CONCEPT 01</p><h2>Natural Language Processing</h2><p>NLP studies how computers work with human language. Here, simple keyword and phrase matching conceptually demonstrates spotting urgent wording, credential requests, and suspicious claims.</p><div class="implementation-note"><b>IMPLEMENTED:</b> local phrase rules; no NLP model.</div></article>
+            <article class="panel concept-tile"><span class="concept-tile-icon purple">◈</span><p class="eyebrow">CONCEPT 02</p><h2>Classification</h2><p>Classification assigns an item to a category. The URL and message tools convert matched rules into a heuristic score, then group it as low, medium, or high risk.</p><div class="implementation-note"><b>IMPLEMENTED:</b> weighted rules and fixed thresholds.</div></article>
+            <article class="panel concept-tile"><span class="concept-tile-icon orange">⌁</span><p class="eyebrow">CONCEPT 03</p><h2>Anomaly Detection</h2><p>Anomaly detection looks for patterns that differ from what is expected. The simulated event feed demonstrates a simple threshold for repeated failed logins.</p><div class="implementation-note"><b>IMPLEMENTED:</b> fictional data and a count threshold.</div></article>
+            <article class="panel concept-tile"><span class="concept-tile-icon green">✧</span><p class="eyebrow">CONCEPT 04</p><h2>Pattern Recognition</h2><p>Pattern recognition identifies recurring signals in data. URL characteristics and common social-engineering phrases are used to explain how suspicious patterns can be surfaced.</p><div class="implementation-note"><b>IMPLEMENTED:</b> deterministic browser-side checks.</div></article>
+          </div>
+          <article class="panel limitations-panel"><div class="limitation-icon">!</div><div><h2>Important limitations</h2><ul><li>A score is an educational signal, not a verdict that content is malicious or safe.</li><li>Nothing is sent to a server; URLs are never opened or checked against live databases.</li><li>Message analysis uses basic rules and may miss or incorrectly flag content.</li><li>Threat-monitor events are fictional and do not represent real network activity.</li></ul></div></article>
+          <div class="about-footer"><span class="brand-mark small-mark"><span></span><span></span><span></span></span><span>CYBERSHIELD AI</span><i></i><span>BUILT FOR LEARNING</span><i></i><span>OFFLINE DEMONSTRATION</span></div>
+        </section>
+
+        <footer class="app-footer"><span>CYBERSHIELD AI <i>•</i> EDUCATIONAL DEMONSTRATION</span><span>ALL ANALYSIS RUNS LOCALLY <i>•</i> NO LIVE THREAT INTELLIGENCE</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+</body>
+</html>
